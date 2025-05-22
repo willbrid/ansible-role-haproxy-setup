@@ -17,6 +17,13 @@
     fail_msg: "the haproxy version must be greater than or equal to {{ haproxy_min_version }}"
   when: haproxy_preinstalled_infos.rc == 0
 
+- name: Check if the version chosen for installation is >= {{ haproxy_min_version }}
+  ansible.builtin.assert:
+    that:
+      - haproxy_version is ansible.builtin.version(haproxy_min_version, 'ge', version_type='semver')
+    fail_msg: "the haproxy version must be greater than or equal to {{ haproxy_min_version }}"
+  when: haproxy_preinstalled_infos.rc != 0
+
 - name: Install haproxy
   ansible.builtin.include_tasks: "install-haproxy.yml"
   when: haproxy_preinstalled_infos.rc != 0
