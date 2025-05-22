@@ -20,8 +20,8 @@ galaxy_info:
         - "jammy"
   galaxy_tags:
     - loadbalancing
-    - high-avaibility
-    - reverse-proxy
+    - highavaibility
+    - reverseproxy
     - system
     - trafic
 
