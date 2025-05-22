@@ -10,7 +10,7 @@
     haproxy_preinstalled_version: "{{ haproxy_preinstalled_infos.stdout_lines[0] | regex_search('HAProxy version ([0-9.]+)', '\\1') }}"
   when: haproxy_preinstalled_infos.rc == 0
 
-- name: Check if the pre-installed haproxy verions is >= {{ haproxy_min_version }}
+- name: Check if the pre-installed haproxy version is >= {{ haproxy_min_version }}
   ansible.builtin.assert:
     that:
       - haproxy_preinstalled_version[0] is ansible.builtin.version(haproxy_min_version, 'ge', version_type='semver')
