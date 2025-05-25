@@ -1,0 +1,3 @@
+---
+haproxy_repo_community: 'ppa:vbernat/haproxy-2.8'
+haproxy_repo_dependencies: ["software-properties-common", "dirmngr"]
