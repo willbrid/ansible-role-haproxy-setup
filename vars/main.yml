@@ -1,2 +1,4 @@
 ---
 haproxy_min_version: "2.6.0"
+haproxy_repo_name: "haproxy"
+haproxy_package_name: "{{ 'haproxy' if haproxy_repo_package_name == '' else haproxy_repo_package_name }}"
