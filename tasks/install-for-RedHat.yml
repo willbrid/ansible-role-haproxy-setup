@@ -14,7 +14,6 @@
     name: '{{ haproxy_package_name }}-{{ haproxy_version }}*'
     state: present
     update_cache: true
-  register: haproxy_installation_infos
 
 - name: Get installed version [RedHat]
   ansible.builtin.command: "haproxy -v"
