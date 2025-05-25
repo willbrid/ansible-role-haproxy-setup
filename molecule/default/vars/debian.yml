@@ -1,0 +1,4 @@
+---
+haproxy_repo_community: "deb [signed-by=/usr/share/keyrings/haproxy-archive-keyring.gpg] http://haproxy.debian.net {{ ansible_distribution_release }}-backports-2.8 main"
+haproxy_repo_keyring_url: "https://haproxy.debian.net/haproxy-archive-keyring.gpg"
+haproxy_repo_keyring_path: "/usr/share/keyrings/haproxy-archive-keyring.gpg"
