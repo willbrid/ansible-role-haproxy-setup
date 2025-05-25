@@ -13,7 +13,16 @@
 
     - name: Include os-specific vars [Debian]
       ansible.builtin.include_vars: "vars/debian.yml"
-      when: ansible_os_family == "Debian"
+      when: ansible_distribution == "Debian"
+
+    - name: Ignore using community repo when ubuntu24
+      ansible.builtin.set_fact:
+        haproxy_use_community_repo: false
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "24"
+
+    - name: Include os-specific vars (only Ubuntu) [Debian]
+      ansible.builtin.include_vars: "vars/ubuntu.yml"
+      when: ansible_distribution == "Ubuntu"
 
     - name: Include willbrid.haproxy_setup
       ansible.builtin.include_role:
