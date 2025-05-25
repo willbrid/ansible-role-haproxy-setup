@@ -1,1 +1,13 @@
 ---
+- name: Update cache for Debian distro
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Update cache for RedHat distro
+  ansible.builtin.dnf:
+    update_cache: true
+  when: ansible_os_family == "RedHat"
+
+- name: Install haproxy [{{ ansible_os_family }}]
+  ansible.builtin.include_tasks: install-for-{{ ansible_os_family }}.yml
