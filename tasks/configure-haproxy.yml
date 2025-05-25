@@ -1,1 +1,20 @@
 ---
+- name: Configure haproxy frontend ssl environment
+  when: haproxy_allow_frontend_ssl
+  block:
+    - name: Create frontend ssl directory
+      ansible.builtin.file:
+        path: "{{ haproxy_frontend_ssl_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Upload frontend ssl certificate files
+      ansible.builtin.copy:
+        src: "{{ item.src_file_path }}"
+        dest: "{{ haproxy_frontend_ssl_dir }}/{{ item.dest_filename }}"
+        owner: root
+        group: root
+        mode: 0640
+      with_items: "{{ haproxy_frontend_ssl_certificates }}"
