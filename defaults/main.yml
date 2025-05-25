@@ -7,3 +7,5 @@ haproxy_repo_package_name: ""
 haproxy_repo_dependencies: []
 haproxy_repo_keyring_url: ""
 haproxy_repo_keyring_path: ""
+haproxy_allow_frontend_ssl: false
+haproxy_frontend_ssl_certificates: []
