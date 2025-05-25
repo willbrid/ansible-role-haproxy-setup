@@ -11,6 +11,10 @@
       ansible.builtin.include_vars: "vars/redhat.yml"
       when: ansible_os_family == "RedHat"
 
+    - name: Include os-specific vars [Debian]
+      ansible.builtin.include_vars: "vars/debian.yml"
+      when: ansible_os_family == "Debian"
+
     - name: Include willbrid.haproxy_setup
       ansible.builtin.include_role:
         name: "willbrid.haproxy_setup"
