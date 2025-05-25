@@ -1,0 +1,40 @@
+---
+- name: Configure haproxy repository [Debian]
+  when: haproxy_use_community_repo and haproxy_repo_community != ''
+  block:
+    - name: Install repository dependencies [Debian]
+      ansible.builtin.package:
+        name: "{{ haproxy_repo_dependencies }}"
+        state: present
+      when: haproxy_repo_dependencies | length > 0
+
+    - name: Add apt key [Debian]
+      ansible.builtin.get_url:
+        url: "{{ haproxy_repo_keyring_url }}"
+        dest: "{{ haproxy_repo_keyring_path }}"
+        mode: 0755
+      when: haproxy_repo_keyring_url != '' and haproxy_repo_keyring_path != ''
+
+    - name: Configure haproxy community repository [Debian]
+      ansible.builtin.apt_repository:
+        repo: "{{ haproxy_repo_community }}"
+        state: present
+        filename: "{{ haproxy_repo_name }}"
+
+- name: Install haproxy [Debian]
+  ansible.builtin.apt:
+    name: '{{ haproxy_package_name }}={{ haproxy_version }}*'
+    state: present
+    update_cache: yes
+
+- name: Get installed version [Debian]
+  ansible.builtin.command: "haproxy -v"
+  changed_when: false
+  failed_when: false
+  register: haproxy_installed_infos
+
+- name: Ensure that haproxy is installed [Debian]
+  ansible.builtin.assert:
+    that:
+      - haproxy_installed_infos.rc == 0
+    fail_msg: "haproxy version {{ haproxy_version }} is not installed"
