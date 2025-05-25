@@ -1,0 +1,4 @@
+---
+haproxy_repo_community: "https://packages.zenetys.com/latest/redhat/$releasever/RPMS/$basearch"
+haproxy_repo_keyring_url: "https://packages.zenetys.com/RPM-GPG-KEY-ZENETYS-ZLAB-Packaging-v1"
+haproxy_repo_package_name: "haproxy28z"
