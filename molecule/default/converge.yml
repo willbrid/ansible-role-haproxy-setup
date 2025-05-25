@@ -3,9 +3,14 @@
   hosts: all
   gather_facts: true
   vars:
-    haproxy_version: "2.8.15"
+    haproxy_use_full_version: false
+    haproxy_use_community_repo: true
 
   tasks:
+    - name: Include os-specific vars [RedHat]
+      ansible.builtin.include_vars: "vars/redhat.yml"
+      when: ansible_os_family == "RedHat"
+
     - name: Include willbrid.haproxy_setup
       ansible.builtin.include_role:
         name: "willbrid.haproxy_setup"
