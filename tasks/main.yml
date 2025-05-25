@@ -24,7 +24,7 @@
       ansible.builtin.assert:
         that:
           - haproxy_version is match('^\\d+\\.\\d+(\\.\\d+)?$')
-        fail_msg: "invalid haproxy version '{{ haproxy_version }}'. Must be in format x.y or x.y.z (e.g., 2.6 or 2.6.7)"
+        fail_msg: "invalid haproxy version '{{ haproxy_version }}', must be in format x.y or x.y.z (e.g., 2.6 or 2.6.7)"
 
     - name: Set haproxy version check
       ansible.builtin.set_fact:
