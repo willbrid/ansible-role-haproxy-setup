@@ -5,19 +5,20 @@
   failed_when: false
   register: haproxy_preinstalled_infos
 
-- name: Get pre-installed haproxy version
-  ansible.builtin.set_fact:
-    haproxy_preinstalled_version: "{{ haproxy_preinstalled_infos.stdout_lines[0] | regex_search('HAProxy version ([0-9.]+)', '\\1') }}"
+- name: Validate haproxy pre-installed version
   when: haproxy_preinstalled_infos.rc == 0
+  block:
+    - name: Get pre-installed haproxy version
+      ansible.builtin.set_fact:
+        haproxy_preinstalled_version: "{{ haproxy_preinstalled_infos.stdout_lines[0] | regex_search('HAProxy version ([0-9.]+)', '\\1') }}"
 
-- name: Check if the pre-installed haproxy version is >= {{ haproxy_min_version }}
-  ansible.builtin.assert:
-    that:
-      - haproxy_preinstalled_version[0] is ansible.builtin.version(haproxy_min_version, 'ge', version_type='semver')
-    fail_msg: "the haproxy version must be greater than or equal to {{ haproxy_min_version }}"
-  when: haproxy_preinstalled_infos.rc == 0
+    - name: Check if the pre-installed haproxy version is >= {{ haproxy_min_version }}
+      ansible.builtin.assert:
+        that:
+          - haproxy_preinstalled_version[0] is ansible.builtin.version(haproxy_min_version, 'ge', version_type='semver')
+        fail_msg: "the haproxy version must be greater than or equal to {{ haproxy_min_version }}"
 
-- name: Validate haproxy version
+- name: Validate haproxy chosen version
   when: haproxy_preinstalled_infos.rc != 0
   block:
     - name: Check if haproxy version format is valid
