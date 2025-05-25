@@ -5,6 +5,9 @@
   vars:
     haproxy_use_full_version: false
     haproxy_use_community_repo: true
+    haproxy_allow_frontend_ssl: true
+    haproxy_frontend_ssl_certificates:
+      - {src_file_path: "files/willbrid.crt", dest_filename: "server.crt"}
 
   tasks:
     - name: Include os-specific vars [RedHat]
