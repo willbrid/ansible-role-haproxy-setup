@@ -16,3 +16,4 @@ haproxy_global:
   stats_socket_configs: "{{ _haproxy_global_stats_socket_configs }}"
   security_ssl_policies: "{{ _haproxy_global_security_ssl_policies }}"
   custom_options: []
+haproxy_config_defaults: []
