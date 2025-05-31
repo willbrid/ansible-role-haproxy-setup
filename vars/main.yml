@@ -5,3 +5,6 @@ haproxy_package_name: "{{ 'haproxy' if haproxy_repo_package_name == '' else hapr
 haproxy_config_filename: "haproxy.cfg"
 haproxy_config_dir: "/etc/haproxy"
 haproxy_frontend_ssl_dir: "{{ haproxy_config_dir }}/ssl"
+_haproxy_global_logs: null
+_haproxy_global_stats_socket_configs: null
+_haproxy_global_security_ssl_policies: null
