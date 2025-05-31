@@ -1,6 +1,6 @@
 ---
 - name: Configure haproxy frontend ssl environment
-  when: haproxy_allow_frontend_ssl
+  when: haproxy_frontend_ssl_enable
   block:
     - name: Create frontend ssl directory
       ansible.builtin.file:
