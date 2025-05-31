@@ -57,3 +57,17 @@
     owner: root
     group: root
     mode: 0644
+  register: haproxy_update_result
+
+- name: Get haproxy configuration status
+  ansible.builtin.command: "haproxy -c -f {{ haproxy_config_dir }}/{{ haproxy_config_filename }}"
+  changed_when: false
+  failed_when: false
+  register: haproxy_config_status
+
+- name: Check if haproxy configuration is valid
+  ansible.builtin.assert:
+    that:
+      - haproxy_config_status.rc == 0
+    fail_msg: "{{ haproxy_config_status.stderr_lines }}"
+  changed_when: haproxy_update_result.changed
