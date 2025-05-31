@@ -1,5 +1,5 @@
 global
-    {% if haproxy_global.enable_zero_warning -%}
+    {% if haproxy_config_global.enable_zero_warning -%}
     zero-warning
     {% endif -%}
     chroot /var/lib/haproxy
@@ -9,21 +9,21 @@ global
     {% if ansible_os_family == "RedHat" -%}
     pidfile /var/run/haproxy.pid
     {% endif -%}
-    maxconn {{ haproxy_global.maxconn }}
+    maxconn {{ haproxy_config_global.maxconn }}
 
-    {% for log_item in haproxy_global.logs -%}
+    {% for log_item in haproxy_config_global.logs -%}
     {{ log_item }}
     {% endfor %}
 
-    {% for stats_socket_config in haproxy_global.stats_socket_configs -%}
+    {% for stats_socket_config in haproxy_config_global.stats_socket_configs -%}
     {{ stats_socket_config }}
     {% endfor %}
 
-    {% for custom_option in haproxy_global.custom_options -%}
+    {% for custom_option in haproxy_config_global.custom_options -%}
     {{ custom_option }}
     {% endfor %}
 
-    {%- for security_ssl_policy in haproxy_global.security_ssl_policies -%}
+    {%- for security_ssl_policy in haproxy_config_global.security_ssl_policies -%}
     {{ security_ssl_policy }}
     {% endfor %}
 

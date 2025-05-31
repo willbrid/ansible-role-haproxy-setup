@@ -19,26 +19,26 @@
         mode: 0640
       with_items: "{{ haproxy_frontend_ssl_certificates }}"
 
-- name: Define default value for haproxy_global items
+- name: Define default value for haproxy_config_global items
   block:
-    - name: Set haproxy_global.logs when is not defined
+    - name: Set haproxy_config_global.logs when is not defined
       ansible.builtin.set_fact:
-        _haproxy_global_logs: >-
+        _haproxy_config_global_logs: >-
           {{
             ["log 127.0.0.1 local2"] if ansible_os_family == 'RedHat' else ["log /dev/log local0"]
           }}
-      when: _haproxy_global_logs is not defined or _haproxy_global_logs is none
-    - name: Set haproxy_global.stats_socket_configs when is not defined
+      when: _haproxy_config_global_logs is not defined or _haproxy_config_global_logs is none
+    - name: Set haproxy_config_global.stats_socket_configs when is not defined
       ansible.builtin.set_fact:
-        _haproxy_global_stats_socket_configs: >-
+        _haproxy_config_global_stats_socket_configs: >-
           {{
             ["stats socket /var/lib/haproxy/"] if ansible_os_family == 'RedHat'
             else ["stats socket /run/haproxy/admin.sock mode 660 level admin", "stats timeout 30s"]
           }}
-      when: _haproxy_global_stats_socket_configs is not defined or _haproxy_global_stats_socket_configs is none
-    - name: Set haproxy_global.security_ssl_policies when is not defined
+      when: _haproxy_config_global_stats_socket_configs is not defined or _haproxy_config_global_stats_socket_configs is none
+    - name: Set haproxy_config_global.security_ssl_policies when is not defined
       ansible.builtin.set_fact:
-        _haproxy_global_security_ssl_policies: >-
+        _haproxy_config_global_security_ssl_policies: >-
           {{
             ["ssl-default-bind-ciphers PROFILE=SYSTEM", "ssl-default-server-ciphers PROFILE=SYSTEM"] if ansible_os_family == 'RedHat'
             else
@@ -48,7 +48,7 @@
               "ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets"
             ]
           }}
-      when: _haproxy_global_security_ssl_policies is not defined or _haproxy_global_security_ssl_policies is none
+      when: _haproxy_config_global_security_ssl_policies is not defined or _haproxy_config_global_security_ssl_policies is none
 
 - name: Update haproxy configuration file
   ansible.builtin.template:

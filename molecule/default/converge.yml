@@ -8,6 +8,16 @@
     haproxy_frontend_ssl_enable: true
     haproxy_frontend_ssl_certificates:
       - {src_file_path: "files/willbrid.crt", dest_filename: "server.crt"}
+    haproxy_config_defaults:
+      - name: "http"
+        options:
+          - "option httplog"
+          - "log global"
+          - "timeout client 1m"
+          - "timeout server 1m"
+          - "timeout connect 10s"
+          - "timeout http-keep-alive 2m"
+          - "timeout queue 15s"
 
   tasks:
     - name: Include os-specific vars [RedHat]
