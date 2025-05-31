@@ -9,3 +9,10 @@ haproxy_repo_keyring_url: ""
 haproxy_repo_keyring_path: ""
 haproxy_frontend_ssl_enable: false
 haproxy_frontend_ssl_certificates: []
+haproxy_global:
+  enable_zero_warning: true
+  maxconn: 4000
+  logs: "{{ _haproxy_global_logs }}"
+  stats_socket_configs: "{{ _haproxy_global_stats_socket_configs }}"
+  security_ssl_policies: "{{ _haproxy_global_security_ssl_policies }}"
+  custom_options: []
