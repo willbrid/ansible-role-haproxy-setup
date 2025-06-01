@@ -26,6 +26,6 @@ haproxy_config_stats:
   bind: "*:8050"
   uri: "/stats"
   exporter_enable: true
-  exporter_path: /metrics
+  exporter_path: "/metrics"
   custom_options:
     - "stats hide-version"
