@@ -1,0 +1,212 @@
+---
+argument_specs:
+  main:
+    short_description: "Install haproxy for Linux"
+    description:
+      - "Install and configure haproxy for RedHat and Debian distros"
+    author: "WillBrid"
+    options:
+      haproxy_version:
+        type: str
+        required: false
+        default: "2.8"
+        description:
+          - "haproxy version in x.y or x.y.z form"
+      haproxy_use_full_version:
+        type: bool
+        required: false
+        default: false
+        description:
+          - "whether to use haproxy full version or no"
+      haproxy_use_community_repo:
+        type: bool
+        required: false
+        default: false
+        description:
+          - "whether to use community repo or no"
+      haproxy_repo_community:
+        type: str
+        required: false
+        default: ""
+        description:
+          - "the community repo url (for RedHat) or ppa (for Ubuntu) or apt signed-by option (for Debian)"
+      haproxy_repo_package_name:
+        type: str
+        required: false
+        default: ""
+        description:
+          - "the name of the haproxy package in a specific repo"
+      haproxy_repo_dependencies:
+        type: list
+        elements: str
+        required: false
+        default: []
+        description:
+          - "dependencies packages to install before installing haproxy"
+      haproxy_repo_keyring_url:
+        type: str
+        required: false
+        default: ""
+        description:
+          - "the url of the repo gpg key"
+      haproxy_repo_keyring_path:
+        type: str
+        required: false
+        default: ""
+        description:
+          - "the full path of the repo gpg key file"
+      haproxy_frontend_ssl_enable:
+        type: bool
+        required: false
+        default: false
+        description:
+          - "whether to configure haproxy frontend ssl"
+      haproxy_frontend_ssl_certificates:
+        type: list
+        elements: dict
+        required: false
+        default: []
+        description:
+          - "list of certificates file to upload"
+        options:
+          src_filename:
+            type: str
+            required: true
+            description:
+              - "the full path of the certificate file to upload"
+          dest_filename:
+            type: str
+            required: true
+            description:
+              - "the destination path of the certificate file"
+      haproxy_config_global:
+        type: dict
+        required: true
+        description:
+          - "haproxy global configuration"
+        options:
+          enable_zero_warning:
+            type: bool
+            required: false
+            default: true
+            description:
+              - "haproxy global block : whether to enable zero_warning option or no"
+          maxconn:
+            type: int
+            required: false
+            default: 4000
+            description:
+              - "haproxy global block : haproxy maxconn option"
+          logs:
+            type: list
+            elements: str
+            required: false
+            description:
+              - "haproxy global block : list of configuration log options"
+          stats_socket_configs:
+            type: list
+            elements: str
+            required: false
+            description:
+              - "haproxy global block : list of stat socket options"
+          security_ssl_policies:
+            type: list
+            elements: str
+            required: false
+            description:
+              - "haproxy global block : list of ssl policy options"
+          custom_options:
+            type: list
+            elements: str
+            required: false
+            default: []
+            description:
+              - "haproxy global block : list of custom global options"
+      haproxy_config_defaults:
+        type: list
+        elements: dict
+        required: false
+        default: []
+        description:
+          - "haproxy defaults block configuration"
+        options:
+          name:
+            type: str
+            required: true
+            description:
+              - "haproxy defaults : the unique name of a haproxy defaults block"
+          custom_options:
+            type: list
+            elements: str
+            required: true
+            description:
+              - "haproxy defaults options"
+      haproxy_config_frontends:
+        type: list
+        elements: dict
+        required: false
+        default: []
+        description:
+          - "haproxy frontends definition"
+        options:
+          name:
+            type: str
+            required: true
+            description:
+              - "haproxy frontend : the unique name of a frontend block"
+          binds:
+            type: list
+            elements: str
+            required: true
+            description:
+              - "haproxy frontend : list of bind option values"
+          from_default:
+            type: str
+            required: false
+            default: ""
+            description:
+              - "haproxy frontend : the name of the defaults block"
+          default_backend:
+            type: str
+            required: false
+            default: ""
+            description:
+              - "haproxy frontend : the default backend to use for the frontend"
+          custom_options:
+            type: str
+            required: false
+            default: []
+            description:
+              - "haproxy frontend : custom frontend options"
+      haproxy_config_backends:
+        type: list
+        elements: dict
+        required: false
+        default: []
+        description:
+          - "haproxy backends definition"
+        options:
+          name:
+            type: str
+            required: true
+            description:
+              - "haproxy backend : the unique name of a backend block"
+          from_default:
+            type: str
+            required: false
+            default: ""
+            description:
+              - "haproxy backend : the name of the defaults block"
+          custom_options:
+            type: list
+            elements: str
+            required: false
+            default: []
+            description:
+              - "haproxy backend : custom backend options"
+          servers:
+            type: list
+            elements: str
+            required: true
+            description:
+              - "haproxy backend : list of server for a backend"
