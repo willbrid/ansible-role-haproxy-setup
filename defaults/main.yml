@@ -19,3 +19,13 @@ haproxy_config_global:
 haproxy_config_defaults: []
 haproxy_config_frontends: []
 haproxy_config_backends: []
+haproxy_config_stats:
+  enable: true
+  name: stats
+  from_default: "http"
+  bind: "*:8050"
+  uri: "/stats"
+  exporter_enable: true
+  exporter_path: /metrics
+  custom_options:
+    - "stats hide-version"
