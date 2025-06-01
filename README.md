@@ -11,6 +11,55 @@ Le rôle **ansible-role-haproxy-setup** permet d’installer et de configurer **
 
 ## Description des Variables
 
+|Nom|Type|Description|Obligatoire|Valeur par défaut|
+|---|----|-----------|-----------|-----------------|
+`haproxy_version`|str|version de haproxy à installer. Format : x.y ou x.y.z|non|`"2.8"`
+`haproxy_use_full_version`|bool|indique s’il faut forcer l’utilisation d’une version complète de haproxy au format x.y.z|non|`false`
+`haproxy_use_community_repo`|bool|indique s’il faut forcer l’utilisation d’un dépôt communautaire de haproxy|non|`false`
+`haproxy_repo_community`|str|définition du dépôt communautaire : url, ppa ou une option apt signed-by|non|`""`
+`haproxy_repo_package_name`|str|le nom du package haproxy dans un dépôt spécifique : s'il n'est pas mentionné alors la chaine de caractères `haproxy` sera utilisée|non|`""`
+`haproxy_repo_dependencies`|list(str)|paquets de dépendances à installer avant l'installation de haproxy|non|`[]`
+`haproxy_repo_keyring_url`|str|l'URL de la clé gpg du dépôt|non|`""`
+`haproxy_repo_keyring_path`|str|le chemin complet du fichier de clé gpg téléchargé du dépôt|non|`""`
+`haproxy_frontend_ssl_enable`|bool|indique s'il faut autoriser la création du repertoire de certificats et uploader les fichiers certificats à renseigner dans les blocs frontend|non|`false`
+`haproxy_frontend_ssl_certificates`|list(dict)|permet de renseigner une liste de certificat à uploader dont chaque item est un dictionnaire de clés : `src_filename` et `dest_filename`|non|`[]`
+`haproxy_frontend_ssl_certificates[].src_filename`|str|chemin relatif ou complet du fichier certificat à uploader|oui|``
+`haproxy_frontend_ssl_certificates[].dest_filename`|str|chemin relatif ou complet de l'emplacement de destination du fichier certificat à uploader|oui|``
+`haproxy_config_global`|dict|dictionnaire de configuration globale|oui|``
+`haproxy_config_global.enable_zero_warning`|bool|clé de `haproxy_config_global` permettant d'activer l'option `zero_warning`|non|`true`
+`haproxy_config_global.maxconn`|int|clé de `haproxy_config_global` permettant de configurer l'option `maxconn`|non|`4000`
+`haproxy_config_global.logs`|list(str)|clé de `haproxy_config_global` permettant de configurer les lignes d'options `log`|non|dépendant de la distribution 
+`haproxy_config_global.stats_socket_configs`|list(str)|clé de `haproxy_config_global` permettant de configurer les lignes de `stats socket`|non|`[]`
+`haproxy_config_global.security_ssl_policies`|list(str)|clé de `haproxy_config_global` permettant de configurer les politiques de sécurité ssl|non|``
+`haproxy_config_global.custom_options`|list(str)|clé de `haproxy_config_global` permettant de configurer les options personnalisées|non|``
+`haproxy_config_defaults`|list(dict)|liste de configuration des blocs `defaults`|non|`[]`
+`haproxy_config_defaults[].name`|str|nom unique d'un bloc `defaults`|oui|``
+`haproxy_config_defaults[].custom_options`|list(str)|liste d'options personnalisées d'un bloc `defaults`|oui|``
+`haproxy_config_frontends`|list(dict)|liste de configuration des blocs `frontend`|non|`[]`
+`haproxy_config_frontends[].name`|str|nom unique d'un bloc `frontend`|oui|``
+`haproxy_config_frontends[].binds`|list(str)|liste d'options `bind` d'un bloc `frontend`|oui|``
+`haproxy_config_frontends[].from_default`|str|nom d'un bloc par défaut `defaults` pour un bloc `frontend`|non|`""`
+`haproxy_config_frontends[].default_backend`|str|nom d'un backend par défaut pour un bloc `frontend`|non|`""`
+`haproxy_config_frontends[].custom_options`|list(str)|liste d'options personnalisées d'un bloc `frontend`|non|`[]`
+`haproxy_config_backends`|list(dict)|liste de configuration des blocs `backend`|non|`[]`
+`haproxy_config_backends[].name`|str|nom unique d'un bloc `backend`|oui|``
+`haproxy_config_backends[].from_default`|str|nom d'un bloc par défaut `defaults` pour un bloc `backend`|non|`""`
+`haproxy_config_backends[].servers`|list(str)|liste d'options `server` d'un bloc `backend`|oui|``
+`haproxy_config_backends[].custom_options`|list(str)|liste d'options personnalisées d'un bloc `backend`|non|`[]`
+`haproxy_config_stats`|dict|dictionnaire de configuration du bloc du service statistique|oui|``
+`haproxy_config_stats.enable`|bool|clé de `haproxy_config_stats` pour indiquer s'il faut activer le service statistique|non|`true`
+`haproxy_config_stats.name`|str|clé de `haproxy_config_stats` pour le nom du bloc du service statistique|oui|``
+`haproxy_config_stats.from_default`|str|clé de `haproxy_config_stats` pour le nom d'un bloc par défaut `defaults` pour le bloc du service statistique|non|`""`
+`haproxy_config_stats.bind`|str|clé de `haproxy_config_stats` pour indiquer le port d'écoute du service statistique|oui|``
+`haproxy_config_stats.uri`|str|clé de `haproxy_config_stats` pour indiquer l'uri du service statistique|non|`"/stats"`
+`haproxy_config_stats.exporter_enable`|bool|clé de `haproxy_config_stats` pour activer ou non l'exporteur prometheus au niveau du service statistique|non|`true`
+`haproxy_config_stats.exporter_path`|str|clé de `haproxy_config_stats` pour configurer l'uri de l'exporteur prometheus au niveau du service statistique|non|`"/metrics"`
+`haproxy_config_stats.custom_options`|list(str)|clé de `haproxy_config_stats` pour configurer les options personnalisées du service statistique|non|`[]`
+
+> Note: Pour la configuration d'un dépôt `RedHat`, il faudrati consulter le site [https://github.com/haproxy/wiki/wiki/Packages](https://github.com/haproxy/wiki/wiki/Packages).
+
+> Note: Pour la configuration d'un dépôt `Debian` ou `Ubuntu` (les variables : `haproxy_repo_community`, `haproxy_repo_keyring_url`, `haproxy_repo_keyring_path` ou `haproxy_repo_dependencies`), il faudrait consulter le site [https://haproxy.debian.net/](https://haproxy.debian.net/).
+
 ## Dépendances
 
 Aucune.
