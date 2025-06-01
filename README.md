@@ -281,11 +281,9 @@ vim $HOME/install-haproxy/playbook.yml
   vars:
     haproxy_version: "2.8"
     haproxy_use_full_version: false
-    haproxy_use_community_repo: true
+    haproxy_use_community_repo: false
     haproxy_frontend_ssl_enable: false
     haproxy_frontend_ssl_certificates: []
-    haproxy_repo_community: 'ppa:vbernat/haproxy-2.8'
-    haproxy_repo_dependencies: ["software-properties-common"]
     haproxy_config_defaults:
       - name: "http"
         custom_options:
