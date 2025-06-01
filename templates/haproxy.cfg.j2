@@ -33,3 +33,30 @@ defaults {{ haproxy_config_default.name }}
     {{ haproxy_config_default_option }}
     {% endfor %}
 {% endfor %}
+
+{% for haproxy_config_frontend in haproxy_config_frontends %}
+frontend {{ haproxy_config_frontend.name }}{% if haproxy_config_frontend.from_default is defined and haproxy_config_frontend.from_default != "" %}{{ ' ' }}from {{ haproxy_config_frontend.from_default }}{% endif %}
+
+{% for haproxy_config_frontend_bind in haproxy_config_frontend.binds %}
+    bind {{ haproxy_config_frontend_bind }}
+{% endfor %}
+{% if haproxy_config_frontend.default_backend is defined and haproxy_config_frontend.default_backend != "" %}
+    default_backend {{ haproxy_config_frontend.default_backend }}
+{% endif %}
+{% for haproxy_config_frontend_custom_option in haproxy_config_frontend.custom_options | default([]) %}
+    {{ haproxy_config_frontend_custom_option }}
+{% endfor %}
+{{ ' ' }}
+{% endfor %}
+
+{% for haproxy_config_backend in haproxy_config_backends %}
+backend {{ haproxy_config_backend.name }}{% if haproxy_config_backend.from_default is defined and haproxy_config_backend.from_default != "" %}{{ ' ' }}from {{ haproxy_config_backend.from_default }}{% endif %}
+
+{% for haproxy_config_backend_custom_option in haproxy_config_backend.custom_options | default([]) %}
+    {{ haproxy_config_backend_custom_option }}
+{% endfor %}
+{% for haproxy_config_backend_server in haproxy_config_backend.servers | default([]) %}
+    {{ haproxy_config_backend_server }}
+{% endfor %}
+{{ ' ' }}
+{% endfor %}
