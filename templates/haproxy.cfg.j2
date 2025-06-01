@@ -29,7 +29,7 @@ global
 
 {% for haproxy_config_default in haproxy_config_defaults -%}
 defaults {{ haproxy_config_default.name }}
-    {% for haproxy_config_default_option in haproxy_config_default.options -%}
+    {% for haproxy_config_default_option in haproxy_config_default.custom_options -%}
     {{ haproxy_config_default_option }}
     {% endfor %}
 {% endfor %}
