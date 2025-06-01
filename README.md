@@ -1,6 +1,6 @@
 # Ansible-role-haproxy-setup
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/willbrid/ansible-role-haproxy-setup/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/willbrid/ansible-role-haproxy-setup/blob/main/LICENSE) [![CI](https://github.com/willbrid/ansible-role-haproxy-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/willbrid/ansible-role-haproxy-setup/actions/workflows/ci.yml)
 
 Le rôle **ansible-role-haproxy-setup** permet d’installer et de configurer **HAProxy**, avec l'**exporteur prometheus** intégré, de manière simple, flexible et déclarative. Grâce à une structure YAML claire, les utilisateurs peuvent définir leurs blocs **global**, **defaults**, **frontends**, **backends** et **stats** sans effort, tout en gardant un contrôle total sur les options avancées de **HAProxy**.
 
