@@ -1,0 +1,33 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: true
+  vars:
+    haproxy_version: "2.8"
+
+  tasks:
+    - name: Check if haproxy is installed
+      block:
+        - name: Get installed version
+          ansible.builtin.command: "haproxy -v"
+          changed_when: false
+          failed_when: false
+          register: haproxy_installed_infos
+
+        - name: Assert that haproxy is installed
+          ansible.builtin.assert:
+            that:
+              - haproxy_installed_infos.rc == 0
+            fail_msg: "haproxy version {{ haproxy_version }} is not installed"
+
+    - name: Check if haproxy service is running
+      block:
+        - name: Get haproxy service status
+          ansible.builtin.systemd_service:
+            name: haproxy
+            state: started
+          register: haproxy_status
+        - name: Assert that haproxy service is running
+          ansible.builtin.assert:
+            that: "haproxy_status.status.ActiveState == 'active'"
+            fail_msg: "the haproxy service is not running !"
