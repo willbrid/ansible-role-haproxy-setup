@@ -11,6 +11,7 @@
     haproxy_config_defaults:
       - name: "http"
         options:
+          - "mode http"
           - "option httplog"
           - "log global"
           - "timeout client 1m"
@@ -18,7 +19,33 @@
           - "timeout connect 10s"
           - "timeout http-keep-alive 2m"
           - "timeout queue 15s"
-
+    haproxy_config_frontends:
+      - name: "frontend_site1"
+        binds:
+          - "*:8000"
+        from_default: "http"
+        default_backend: "backend_site1"
+      - name: "frontend_site2"
+        binds:
+          - "*:8080"
+          - "*:8443"
+        from_default: "http"
+        default_backend: "backend_site2"
+        custom_options:
+          - "mode http"
+    haproxy_config_backends:
+      - name: "backend_site1"
+        from_default: "http"
+        servers:
+          - "server site1-web 127.0.0.1:8081 check"
+      - name: "backend_site2"
+        from_default: "http"
+        custom_options:
+          - "balance roundrobin"
+        servers:
+          - "server site2-web1 127.0.0.1:8084 check"
+          - "server site2-web2 127.0.0.1:8085 check"
+          - "server site2-web3 127.0.0.1:8086 check"
   tasks:
     - name: Include os-specific vars [RedHat]
       ansible.builtin.include_vars: "vars/redhat.yml"
