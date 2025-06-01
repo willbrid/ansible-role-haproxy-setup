@@ -60,3 +60,17 @@ backend {{ haproxy_config_backend.name }}{% if haproxy_config_backend.from_defau
 {% endfor %}
 {{ ' ' }}
 {% endfor %}
+
+{% if haproxy_config_stats.enable %}
+listen {{ haproxy_config_stats.name }}{% if haproxy_config_stats.from_default is defined and haproxy_config_stats.from_default != "" %}{{ ' ' }}from {{ haproxy_config_stats.from_default }}{% endif %}
+
+    bind {{ haproxy_config_stats.bind }}
+{% if haproxy_config_stats.exporter_enable | default(true) %}
+    http-request use-service prometheus-exporter if { path {{ haproxy_config_stats.exporter_path }} }
+{% endif %}
+    stats enable
+    stats uri {{ haproxy_config_stats.uri }}
+{% for haproxy_config_stats_custom_option in haproxy_config_stats.custom_options | default([]) %}
+    {{ haproxy_config_stats_custom_option }}
+{% endfor %}
+{% endif %}

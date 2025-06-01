@@ -210,3 +210,61 @@ argument_specs:
             required: true
             description:
               - "haproxy backend : list of server for a backend"
+      haproxy_config_stats:
+        type: dict
+        required: true
+        description:
+          - "haproxy stats configuration"
+        options:
+          enable:
+            type: bool
+            required: false
+            default: true
+            description:
+              - "haproxy stats : whether to enable haproxy stats service"
+          name:
+            type: str
+            required: false
+            default: ""
+            description:
+              - "haproxy stats : the unique name of the stat service block"
+              - "it's required when haproxy_config_stats.enable is true"
+          from_default:
+            type: str
+            required: false
+            default: ""
+            description:
+              - "haproxy stats : the name of the defaults block"
+          bind:
+            type: str
+            required: false
+            default: "*:8050"
+            description:
+              - "haproxy stats : the bind option of the stat service block"
+              - "it's required when haproxy_config_stats.enable is true"
+          uri:
+            type: str
+            required: false
+            default: "/stats"
+            description:
+              - "haproxy stats : the stats uri option of the stat service block"
+              - "it's required when haproxy_config_stats.enable is true"
+          exporter_enable:
+            type: bool
+            required: false
+            default: true
+            description:
+              - "haproxy stats : whether to enable prometheus exporter or no"
+          exporter_path:
+            type: str
+            required: false
+            default: "/metrics"
+            description:
+              - "haproxy stats : the path of the prometheus exporter"
+              - "it's required when haproxy_config_stats.exporter_enable is true"
+          custom_options:
+            type: list
+            elements: str
+            default: []
+            description:
+              - "haproxy stats : custom stats options"
