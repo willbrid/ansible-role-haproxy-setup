@@ -1,0 +1,13 @@
+---
+- name: Restart haproxy service
+  ansible.builtin.systemd_service:
+    name: haproxy
+    state: restarted
+  register: haproxy_status
+  notify: Ensure haproxy service is running
+
+- name: Ensure haproxy service is running
+  ansible.builtin.assert:
+    that: "haproxy_status.status.ActiveState == 'active'"
+    fail_msg: "the haproxy service is not active !"
+    success_msg: "the haproxy service is active !"
