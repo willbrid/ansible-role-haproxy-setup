@@ -71,3 +71,11 @@
       - haproxy_config_status.rc == 0
     fail_msg: "{{ haproxy_config_status.stderr_lines }}"
   changed_when: haproxy_update_result.changed
+  notify: Restart haproxy service
+
+- name: Enable and start haproxy service
+  ansible.builtin.systemd_service:
+    name: haproxy
+    state: started
+    daemon_reload: true
+    enabled: true
