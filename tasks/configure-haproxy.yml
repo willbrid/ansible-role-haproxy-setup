@@ -12,7 +12,7 @@
 
     - name: Upload frontend ssl certificate files
       ansible.builtin.copy:
-        src: "{{ item.src_file_path }}"
+        src: "{{ item.src_filename }}"
         dest: "{{ haproxy_frontend_ssl_dir }}/{{ item.dest_filename }}"
         owner: root
         group: root
