@@ -224,8 +224,7 @@ argument_specs:
               - "haproxy stats : whether to enable haproxy stats service"
           name:
             type: str
-            required: false
-            default: ""
+            required: true
             description:
               - "haproxy stats : the unique name of the stat service block"
               - "it's required when haproxy_config_stats.enable is true"
