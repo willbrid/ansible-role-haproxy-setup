@@ -17,3 +17,5 @@ haproxy_config_global:
   security_ssl_policies: "{{ _haproxy_config_global_security_ssl_policies }}"
   custom_options: []
 haproxy_config_defaults: []
+haproxy_config_frontends: []
+haproxy_config_backends: []
