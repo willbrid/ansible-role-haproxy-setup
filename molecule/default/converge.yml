@@ -7,10 +7,10 @@
     haproxy_use_community_repo: true
     haproxy_frontend_ssl_enable: true
     haproxy_frontend_ssl_certificates:
-      - {src_file_path: "files/willbrid.crt", dest_filename: "server.crt"}
+      - {src_filename: "files/willbrid.crt", dest_filename: "server.crt"}
     haproxy_config_defaults:
       - name: "http"
-        options:
+        custom_options:
           - "mode http"
           - "option httplog"
           - "log global"
