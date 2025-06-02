@@ -56,9 +56,9 @@ Le rôle **ansible-role-haproxy-setup** permet d’installer et de configurer **
 `haproxy_config_stats.exporter_path`|str|clé de `haproxy_config_stats` pour configurer l'uri de l'exporteur prometheus au niveau du service statistique|non|`"/metrics"`
 `haproxy_config_stats.custom_options`|list(str)|clé de `haproxy_config_stats` pour configurer les options personnalisées du service statistique|non|`[]`
 
-> Note: Pour la configuration d'un dépôt `RedHat`, il faudrati consulter le site [https://github.com/haproxy/wiki/wiki/Packages](https://github.com/haproxy/wiki/wiki/Packages).
+> Note: Pour configurer un dépôt des distributions `RedHat` (les variables : `haproxy_repo_community`,`haproxy_repo_keyring_url` ou `haproxy_repo_package_name`), veuillez consulter le site [https://github.com/haproxy/wiki/wiki/Packages](https://github.com/haproxy/wiki/wiki/Packages).
 
-> Note: Pour la configuration d'un dépôt `Debian` ou `Ubuntu` (les variables : `haproxy_repo_community`, `haproxy_repo_keyring_url`, `haproxy_repo_keyring_path` ou `haproxy_repo_dependencies`), il faudrait consulter le site [https://haproxy.debian.net/](https://haproxy.debian.net/).
+> Note: Pour configurer un dépôt des distributions `Debian` (les variables : `haproxy_repo_community`, `haproxy_repo_keyring_url`, `haproxy_repo_keyring_path` ou `haproxy_repo_dependencies`), veuillez consulter le site [https://haproxy.debian.net/](https://haproxy.debian.net/).
 
 ## Dépendances
 
