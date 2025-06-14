@@ -69,7 +69,7 @@ Aucune.
 - Installation du rôle
 
 ```bash
-mkdir -p $HOME/install-haproxy/roles
+mkdir -p $HOME/install-haproxy
 ```
 
 ```bash
@@ -83,7 +83,7 @@ vim $HOME/install-haproxy/requirements.yml
 ```
 
 ```bash
-cd $HOME/install-haproxy && ansible-galaxy install -r requirements.yml --roles-path roles
+cd $HOME/install-haproxy && ansible-galaxy install --force -r requirements.yml
 ```
 
 > Note: On suppose qu’un fichier `hosts.ini` (dans le repertoire `$HOME/install-haproxy`) est défini, contenant l’inventaire des serveurs de groupe `server`, utilisant des distributions `Debian` ou `RedHat`.
